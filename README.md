@@ -2,9 +2,11 @@
 
 Read our paper here: [What has AlphaFold3 learned about antibody and nanobody docking, and what remains unsolved?](https://www.biorxiv.org/content/10.1101/2024.09.21.614257)
 
+The full dataset of cleaned & formatted crystal structures and AF3 predictions can be found here: [https://zenodo.org/records/14722282](https://zenodo.org/records/14722282)
+
 ---
 
-We provide relevant code for benchmarking and visualizing results here, the full dataset of cleaned & formatted crystal structures and AF3 predictions can be found here: [https://zenodo.org/records/14722282](https://zenodo.org/records/14722282)
+We provide relevant code for benchmarking and visualizing results here.
 
 We have made our code files available to encourage standardized benchmarking for new algorithms and benchmarks to expand on. 
 
