@@ -5,3 +5,11 @@ Read our paper here: [What has AlphaFold3 learned about antibody and nanobody do
 
 We provide relevant code for benchmarking and visualizing results here. 
 
+We have made our code files available to encourage standardized benchmarking for new algorithms and benchmarks to expand on. 
+
+## Code Structure:
+
+all files named `run_*.sh` are SLURM scripts that can be used to run files in the `scripts` folder
+
+
+
