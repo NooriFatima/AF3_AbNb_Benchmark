@@ -46,6 +46,8 @@ The `analysis.ipynb` file is a Jupyter notebook contains all the experiments and
 
 Please cite our pre-print if you use any of our code or data! 
 
+Hitawala, F. N., & Gray, J. J. (2024). What has AlphaFold3 learned about antibody and nanobody docking, and what remains unsolved? bioRxiv, 2024.09.21.614257. https://doi.org/10.1101/2024.09.21.614257
+
 ---
 
 ## Contact us
