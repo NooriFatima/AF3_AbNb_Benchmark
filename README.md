@@ -6,11 +6,9 @@ The full dataset of cleaned & formatted crystal structures and AF3 predictions c
 
 ---
 
-We provide relevant code for benchmarking and visualizing results here.
-
 We have made our code files available to encourage standardized benchmarking for new algorithms and benchmarks to expand on. 
 
-The conda environment file is made available - `environment.yml`, as are the python packages - `requirements.txt`. 
+The conda environment file - `environment.yml`, python packages - `requirements.txt`. 
 
 You can re-create the conda environment through the command: `conda env create -f environment.yml`. 
 
@@ -33,6 +31,10 @@ Folder `scripts` contains useful python scripts.
 * `ciftoPDB.py` converts mmCIF files (AF3 preferred output) to PDB files
 
 All scripts take in 1-2 arguments through commandline: pandas dataframes that hold the file directory and file name as well as other meta tags (ex. bound/unbound, antibody/nanobody, etc.). Though we *highly* recommend using dataframe querying, these can be edited as needed. The second argument (if needed) is the csv filepath for outputting calculation results.
+
+Ex. command: `rmsds.py datastruc\filepath\ results\output\filepath`
+
+To use the SLURM files, please add the arguments into the file so that they look like the above command. Functionality for passing strings to the SLURM files will be added. 
 
 --- 
 
