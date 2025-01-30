@@ -2,7 +2,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=12
 #SBATCH --partition=shared
-#SBATCH --account=jgray21
+#SBATCH --account=<your partition account here>
 #SBATCH --time=24:00:00
 #SBATCH -o out/all_energies_%j #send stdout to outfile
 #SBATCH -e error/all_energies_%j #send stderr to errfile
@@ -10,4 +10,4 @@
 
 which python3
 conda activate AF3
-python3 bindenergy_with_datastruc.py
+python3 scripts/bindenergy_with_datastruc.py
