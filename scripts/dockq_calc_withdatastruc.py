@@ -22,6 +22,8 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import AlignIO
+import argparse
+
 from Benchmarking.benchmark.ops.all_funcs import *
 from Benchmarking.benchmark.ops.protein import *
 from Benchmarking.benchmark.ops.benchmark_clean_funcs import *
@@ -29,21 +31,12 @@ from Benchmarking.benchmark.ops.benchmark_clean_funcs import *
 
 from DockQ.DockQ import load_PDB, run_on_all_native_interfaces
 
-# datastructure = pd.read_csv("fixed_all_Ab_comparison_datastruc.csv").drop(columns=['Unnamed: 0'])
-# nb_datastruc = pd.read_csv("fixed_all_Nb_comparison_datastruc.csv")
-# datastructure = pd.concat([datastructure,nb_datastruc])
-# datastructure = datastructure[datastructure['Bound_Unbound']=='bound']
-# notrun_pdbs = ['8h7m_1.pdb','8h7i_0.pdb','8h7n_0.pdb','8h7r_0.pdb','7te8_2.pdb','8w85_0.pdb','8c7h_0.pdb','8w86_0.pdb','8w84_0.pdb']
-# notrun_pdbs = ['8h7m_1','8h7i_0','8h7n_0','8h7r_0','7te8_2','8w85_0','8c7h_0','8w86_0','8w84_0']
-# af3_v_native_data = pd.read_csv("af3_native_comparison_renumbered_datastruc_filtered_pdbs.csv").drop(columns=['Unnamed: 0'])
-# datastructure = af3_v_native_data[af3_v_native_data['Bound_Unbound']=='bound']
-# datastructure = datastructure[datastructure['PDB_short'].isin(notrun_pdbs)]
-# pred_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/New_AF3_Benchmark/seed_div_followup/7wtf_1_pdbs/'
-# pred_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/New_AF3_Benchmark/seed_div_followup/hierarchical_followup/'
-# subdirs = [x for x in os.listdir(pred_dir) if ('.zip' not in x) & ('fab' not in x) & ('fvag' not in x)]
-# native_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/New_AF3_Benchmark/bound_pdbs/renamed/reordered/'
+parser = argparse.ArgumentParser()
+parser.add_argument("datafilepath", help="datastructure filepath")
+parser.add_argument("resultsfilepath", help="filepath to dump results ")
+args = parser.parse_args()
 
-datastructure = pd.read_csv("AlphaRED/preds/alphared_rmsd_datastruc.csv")
+datastructure = pd.read_csv(f"{args.datafilepath}")
 
 pdbs = []
 dockqs = []
@@ -103,4 +96,4 @@ for i in trange(datastructure.shape[0]):
         print(e)
 
 all_dock_scores = pd.DataFrame({'Dir':dirs,'PDB':pdbs,'Protein_type':ptypes,"DockQ":dockqs,"iRMS":irmss,"LRMS":lrmss,"F1":f1s,"Fnat":fnats,'Seed':seeds,'Model':models})
-all_dock_scores.to_csv("AlphaRED/results/AlphaRED_all_dockqs.csv")
+all_dock_scores.to_csv(f"{args.resultsfilepath}")

@@ -22,38 +22,18 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import AlignIO
+import argparse
+
 from Benchmarking.benchmark.ops.all_funcs import *
 from Benchmarking.benchmark.ops.protein import *
 from Benchmarking.benchmark.ops.benchmark_clean_funcs import *
 
-# ab_remaining_pdbs_df = pd.read_csv("Extended_Abs_benchmark_remaining.csv")
-# ab_remaining_pdbs_df =ab_remaining_pdbs_df.drop(columns=ab_remaining_pdbs_df.columns[:2])
-# nb_remaining_pdbs_df = pd.read_csv("Nb_remaining_igfold_benchmark.csv")
-# nb_remaining_pdbs_df = nb_remaining_pdbs_df.drop(columns=nb_remaining_pdbs_df.columns[:1])
-# extended_bchmk_set = pd.concat([ab_remaining_pdbs_df,pd.read_csv("Nbs_final_seqs_withBUB.csv").drop(columns=['Unnamed: 0'])],axis=0,keys=['Ab','Nb']).reset_index().drop(columns=['level_1']).rename(columns={'level_0':'Protein_type'})
+parser = argparse.ArgumentParser()
+parser.add_argument("datafilepath", help="datastructure filepath")
+parser.add_argument("resultsfilepath", help="filepath to dump results ")
+args = parser.parse_args()
 
-# AF2_abs_igfold_benchmark_clean_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/AF2M_Benchmark/IgFold_remake/renamed_outputs/'
-# AF2_nbs_igfold_benchmark_clean_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/AF2M_Benchmark/IgFold_remake/Nbs/'
-# Igfold_af3_preds_clean_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/Ruffolo_AF3/'
-# Native_clean_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/New_AF3_Benchmark/'
-# AF3_pt1_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/AF3/sorted/'
-# AF3_pt2_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/AF3/extended/'
-# af3_igfold_dir = '/home/ftalib1/scr4_jgray21/ftalib1/AF3_Benchmark/Ruffolo_AF3/'
-# bub_prot_to_AF3_extDir = {('bound','Nb'):"Bound/Nb/",('unbound','Nb'):"Unbound/Nb/",\
-#                           ('bound','Ab'):"Bound/Ab/",('unbound','Ab'):"Unbound/Ab/"}
-# bub_prot_to_Native_extDir = {('bound','Nb'):"bound_nanobody_pdbs/renamed/reordered/",('unbound','Nb'):"unbound_nanobody_pdbs/renamed/reordered/",\
-#                           ('bound','Ab'):"bound_pdbs/renamed/reordered/",('unbound','Ab'):"unbound_pdbs/renamed/reordered/"}
-
-# bub_prot_to_igfold_af3s_dir = {'Nb':'Abs/','Ab':'Nbs/'}
-
-
-# datastructure = pd.read_csv("fixed_all_Ab_comparison_datastruc.csv").drop(columns=['Unnamed: 0'])
-# nb_datastruc = pd.read_csv("fixed_all_Nb_comparison_datastruc.csv")
-# datastructure = pd.concat([datastructure,nb_datastruc],keys=['antibody','nanobody']).reset_index().drop(columns=['level_1']).rename(columns={"level_0":"Protein_type"})
-
-
-af3_v_native_data = pd.read_csv("af3_native_comparison_renumbered_datastruc_filtered_pdbs.csv").drop(columns=['Unnamed: 0']) # Newest
-datastructure  = af3_v_native_data
+datastructure = pd.read_csv(f"{args.datafilepath}").drop(columns=['Unnamed: 0']) # Newest
 
 #Getting plddts for extended set
 
@@ -75,7 +55,7 @@ for x in trange(datastructure.shape[0]):
     #     if os.path.isdir(af3_outer_dir+sub_dir):
     #         per_pdbs = [x for x in os.listdir(af3_outer_dir+sub_dir) if 'renamed' in x]
     #         for k in per_pdbs:
-    af3_file = datastructure.iloc[x].Dir_Pred+datastructure.iloc[x].Subdir+'/renamed_'+"_".join(af3_v_native_data.iloc[0].PDB_Pred.split("_")[-6:])
+    af3_file = datastructure.iloc[x].Dir_Pred+datastructure.iloc[x].Subdir+'/renamed_'+"_".join(datastructure.iloc[0].PDB_Pred.split("_")[-6:])
     # print(af3_loc)
     if os.path.isfile(af3_file):
         try:
@@ -102,7 +82,4 @@ AF3_H3_plddts = pd.DataFrame({"PDB":AF3pdbs,'H3_plddt_arrays':h3_plddt_arrays,'L
                               'Avg_H3_pLDDT':[np.array(x).mean() for x in h3_plddt_arrays],\
                               'Avg_L3_pLDDT':[np.array(x).mean() for x in l3_plddt_arrays],\
                               "Bound_Unbound":af3_bub})
-AF3_H3_plddts.to_csv("AF3_renum_all_h3_l3plddts.csv")
-# AF2_h3_loops_rmsd_df = pd.concat([AF2_h3_loops_rmsd_df,pd.concat([pd.DataFrame(x,index=[0]) for x in results]).reset_index().drop(columns=['index'])],axis=1)
-# AF2_h3_loops_rmsd_df
-# # antigen_context_Ab_change_df
+AF3_H3_plddts.to_csv(f"{args.resultsfilepath}")

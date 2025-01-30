@@ -23,17 +23,23 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import AlignIO
+import argparse
 from Benchmarking.benchmark.ops.all_funcs import *
 from Benchmarking.benchmark.ops.protein import *
 from Benchmarking.benchmark.ops.benchmark_clean_funcs import *
 from pyrosetta.rosetta.core.scoring import *
 from pyrosetta.rosetta.protocols.analysis import InterfaceAnalyzerMover
 from Bio import BiopythonWarning
+
 warnings.simplefilter('ignore', BiopythonWarning)
 init('-ignore_unrecognized_res \
      -ignore_zero_occupancy false -load_PDB_components false \
      -no_fconfig -check_cdr_chainbreaks false')
 
+parser = argparse.ArgumentParser()
+parser.add_argument("datafilepath", help="datastructure filepath")
+parser.add_argument("resultsfilepath", help="filepath to dump results ")
+args = parser.parse_args()
 
 
 def get_interface_analyzer(partner_chain_str, scorefxn, pack_sep=False):
@@ -80,7 +86,7 @@ pack_scorefxn = create_score_function(energy_fxn)
 # datastructure = pd.read_csv("results/AF3_results_renum_fv.csv").drop(columns=['Unnamed: 0'])
 # datastructure['Protein_type'] = ['nanobody' if datastructure.iloc[x].ocd==0.0 else 'antibody' for x in range(datastructure.shape[0])]
 # datastructure= datastructure[(datastructure['Bound_Unbound']=='bound')&(datastructure['AF3_PDB'].str.contains('seed1'))&(datastructure['AF3_PDB'].str.contains('model_0'))]
-datastructure = pd.read_csv("results/round_6/datafiles/topranked_benchmark_results.csv")
+datastructure = pd.read_csv(f"{args.datafilepath}")
 datastructure = datastructure[datastructure['Bound_Unbound']=='bound']
 
 for i in trange(datastructure.shape[0]):
@@ -94,7 +100,7 @@ for i in trange(datastructure.shape[0]):
     prottypes.append(prottype)
 
 binding_es = pd.DataFrame({"PDB":pdbs,"del_G_B":bind_es,'Protein_type':prottypes})
-binding_es.to_csv("results/round_6/datafiles/top_ranked_renum_fv_all_bindingenergies.csv")
+binding_es.to_csv(f"{args.resultsfilepath}")
 
 # dirs =[AF3_og_nb_dir,AF3_ext_nb_dir]
 # dirs =[AF3_ext_nb_dir]

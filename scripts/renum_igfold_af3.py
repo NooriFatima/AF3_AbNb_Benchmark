@@ -28,10 +28,13 @@ from Benchmarking.benchmark.ops.all_funcs import *
 from Benchmarking.benchmark.ops.protein import *
 from Benchmarking.benchmark.ops.benchmark_clean_funcs import *
 import colorcet as cc
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument("datafilepath", help="datastructure filepath")
+args = parser.parse_args()
 
-
-af3_igfold_renamed_datastruc = pd.read_csv("af3_igfold_benchmarkrenamed_datastruc_nbs.csv").drop(columns=['Unnamed: 0'])
+af3_igfold_renamed_datastruc = pd.read_csv(f"{args.datafilepath}").drop(columns=['Unnamed: 0'])
 af3_igfold_renamed_datastruc
 for i in trange(af3_igfold_renamed_datastruc.shape[0]):
     pdb_src = af3_igfold_renamed_datastruc.iloc[i].Dir +'/'+ af3_igfold_renamed_datastruc.iloc[i].PDB
