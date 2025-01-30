@@ -2,6 +2,7 @@
 
 Read our paper here: [What has AlphaFold3 learned about antibody and nanobody docking, and what remains unsolved?](https://www.biorxiv.org/content/10.1101/2024.09.21.614257)
 
+---
 
 We provide relevant code for benchmarking and visualizing results here, the full dataset of cleaned & formatted crystal structures and AF3 predictions can be found here: 
 
@@ -9,6 +10,11 @@ We have made our code files available to encourage standardized benchmarking for
 
 The conda environment file is made available - `environment.yml`, as are the python packages - `requirements.txt`. 
 
+You can re-create the conda environment through the command: `conda env create -f environment.yml`. 
+
+Install the python packages after activating the new environment through `pip install -r requirements.txt`. (try this `pip3 install -r requirements.txt` if `pip` doesn't work).
+
+--- 
 
 ## Code Structure:
 
@@ -25,6 +31,8 @@ Folder `scripts` contains useful python scripts.
 * `ciftoPDB.py` converts mmCIF files (AF3 preferred output) to PDB files
 
 All scripts take in 1-2 arguments through commandline: pandas dataframes that hold the file directory and file name as well as other meta tags (ex. bound/unbound, antibody/nanobody, etc.). Though we *highly* recommend using dataframe querying, these can be edited as needed. The second argument (if needed) is the csv filepath for outputting calculation results.
+
+--- 
 
 
 
