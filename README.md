@@ -36,6 +36,21 @@ All scripts take in 1-2 arguments through commandline: pandas dataframes that ho
 
 --- 
 
+## Visualization
+
+The `analysis.ipynb` file is a Jupyter notebook contains all the experiments and relevant graph generating code from this paper.
+
+--- 
+
+## Cite
+
+Please cite our pre-print if you use any of our code or data! 
+
+-- 
+
+## Contact us
+
+Please post issues as you use this work. We'd love to help where we can. Thank you!
 
 
 
